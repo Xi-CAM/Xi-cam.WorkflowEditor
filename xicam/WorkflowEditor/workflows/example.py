@@ -8,9 +8,6 @@ class ExampleWorkflow(Workflow):
 
         fft = FFT()
         fft.axis.value = 1
-        sum = SUM()
-
-        fft.out.connect(sum.input)
 
         # add all processes to the workflow
         for process in [fft]:
