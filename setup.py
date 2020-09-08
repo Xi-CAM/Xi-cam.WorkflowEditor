@@ -6,10 +6,10 @@ Usage: pip install -e .
        twine upload dist/*
 """
 
-from setuptools import setup
+from setuptools import setup, find_packages, find_namespace_packages
 
 setup(
-    name='xicam.WorkflowEditor',
+    name='xicam.workfloweditor',
 
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
@@ -55,7 +55,7 @@ setup(
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
-    packages=['xicam.WorkflowEditor', 'xicam.WorkflowEditor.processing', 'xicam.WorkflowEditor.workflows', ],
+    packages=find_packages() + find_namespace_packages(include=["xicam.*"]),
 
     package_dir={},
 
@@ -67,7 +67,7 @@ setup(
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=['numpy', 'qtpy'],
+    install_requires=['xicam'],
 
     setup_requires=[],
 
@@ -83,8 +83,7 @@ setup(
     # If there are data files included in your packages that need to be
     # installed, specify them here.  If using Python 2.6 or less, then these
     # have to be included in MANIFEST.in as well.
-    package_data={'xicam.WorkflowEditor': ['*.yapsy-plugin'],
-                  'xicam.WorkflowEditor.processing': ['*.yapsy-plugin'], },
+    package_data={},
 
     # Although 'package_data' is the preferred approach, in some case you may
     # need to place data files outside of your packages. See:
@@ -96,7 +95,9 @@ setup(
     # To provide executable scripts, use entry points in preference to the
     # "scripts" keyword. Entry points provide cross-platform support and allow
     # pip to create the appropriate form of executable for the target platform.
-    entry_points={},
+    entry_points={"xicam.plugins.GUIPlugin": [
+        "workflow_editor =  xicam.workfloweditor:WorkflowEditorPlugin"
+    ]},
 
     ext_modules=[],
     include_package_data=True
