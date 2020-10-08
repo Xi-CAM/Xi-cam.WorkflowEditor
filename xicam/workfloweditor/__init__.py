@@ -1,8 +1,9 @@
 import numpy as np
+import scipy.misc
 from databroker.in_memory import BlueskyInMemoryCatalog
 
 from xicam.core.execution.workflow import ingest_result_set
-from xicam.core.intents import PlotIntent
+from xicam.core.intents import PlotIntent, ImageIntent
 from xicam.gui.widgets.imageviewmixins import BetterButtons, LogScaleIntensity
 
 from xicam.core import msg
@@ -62,7 +63,9 @@ class WorkflowEditorPlugin(GUIPlugin):
             return [PlotIntent(x=np.array([1,2,3]),
                                y=np.array([1,2,3]),
                                item_name='test',
-                               labels={'bottom': 'x', 'left': 'y'})]
+                               labels={'bottom': 'x', 'left': 'y'}),
+                    ImageIntent(scipy.misc.face(True),
+                                item_name='Raccoon')]
 
         ensemble.append_catalog(catalog)
         self.ensemble_model.add_ensemble(ensemble, project_intents)
