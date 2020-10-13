@@ -73,7 +73,7 @@ class WorkflowEditorPlugin(GUIPlugin):
 
                     intent_class = plugin_manager.get_plugin_by_name(intent_class_name, 'intents')
 
-                    for output_name, intent_kwarg_name in output_map.items():
+                    for intent_kwarg_name, output_name in output_map.items():
                         kwargs[intent_kwarg_name] = getattr(run_catalog, operation_id).to_dask()[output_name]
                     intent = intent_class(item_name=name, *args, **kwargs)
                     intents.append(intent)
