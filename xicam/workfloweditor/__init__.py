@@ -12,8 +12,9 @@ from xicam.plugins import GUIPlugin, GUILayout, manager as plugin_manager
 from xicam.gui.widgets.linearworkfloweditor import WorkflowEditor
 # TODO: temporary code -- this should live in the views module (after view/model updated with layoutChanged)
 from qtpy.QtWidgets import QWidget, QVBoxLayout
-from xicam.SAXS.widgets.views import DataSelectorView, StackedCanvasView
-from xicam.XPCS.models import IntentsModel, EnsembleModel, Ensemble
+from xicam.gui.widgets.views import DataSelectorView, StackedCanvasView
+from xicam.core.workspace import Ensemble
+from xicam.gui.models import EnsembleModel, IntentsModel
 
 
 class WorkflowEditorPlugin(GUIPlugin):
