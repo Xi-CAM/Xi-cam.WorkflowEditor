@@ -1,0 +1,16 @@
+.DS_Store
+*.edf
+*.nxs
+.idea/
+*.pyc
+*.csv
+*.tif
+build/
+dist/
+docs/build/
+docs/*.log
+*.egg-info/
+dask-worker-space
+*.ui
+ui/
+*.dist-info/
