@@ -2,13 +2,13 @@ import numpy as np
 import scipy.misc
 from databroker.in_memory import BlueskyInMemoryCatalog
 
-from xicam.core.execution.workflow import ingest_result_set
+from xicam.core.execution.workflow import ingest_result_set, project_intents
 from xicam.core.intents import PlotIntent, ImageIntent
 from xicam.gui.widgets.imageviewmixins import BetterButtons, LogScaleIntensity
 
 from xicam.core import msg
 from xicam.core.execution import Workflow
-from xicam.plugins import GUIPlugin, GUILayout, manager as plugin_manager
+from xicam.plugins import GUIPlugin, GUILayout
 from xicam.gui.widgets.linearworkfloweditor import WorkflowEditor
 # TODO: temporary code -- this should live in the views module (after view/model updated with layoutChanged)
 from qtpy.QtWidgets import QWidget, QVBoxLayout
@@ -59,26 +59,6 @@ class WorkflowEditorPlugin(GUIPlugin):
         catalog.upsert(documents[0][1], documents[-1][1], ingest_result_set, [self.workflow, result], {})
         catalog = catalog[-1]
         ####
-
-        def project_intents(run_catalog):
-            intents = []
-
-            for projection in run_catalog.metadata['start']['projections']:
-                if projection['name'] == 'intent':
-                    intent_class_name = projection['projection']['intent_type']['value']
-                    args = projection['projection']['args']['value']
-                    kwargs = projection['projection']['kwargs']['value']
-                    output_map = projection['projection']['output_map']['value']
-                    name = projection['projection']['name']['value']
-                    operation_id = projection['projection']['operation_id']['value']
-
-                    intent_class = plugin_manager.get_plugin_by_name(intent_class_name, 'intents')
-
-                    for intent_kwarg_name, output_name in output_map.items():
-                        kwargs[intent_kwarg_name] = getattr(run_catalog, operation_id).to_dask()[output_name]
-                    intent = intent_class(item_name=name, *args, **kwargs)
-                    intents.append(intent)
-            return intents
 
         ensemble.append_catalog(catalog)
         self.ensemble_model.add_ensemble(ensemble, project_intents)
