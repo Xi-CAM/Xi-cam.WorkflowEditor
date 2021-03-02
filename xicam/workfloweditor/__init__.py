@@ -61,4 +61,4 @@ class WorkflowEditorPlugin(GUIPlugin):
         ####
 
         ensemble.append_catalog(catalog)
-        self.ensemble_model.add_ensemble(ensemble, project_intents)
+        self.ensemble_model.add_ensemble(ensemble, [project_intents])
